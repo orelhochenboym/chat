@@ -8,6 +8,8 @@
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
     "@nestjs/platform-express": "^10.0.2",
+    "@nestjs/platform-socket.io": "^10.3.8",
+    "@nestjs/websockets": "^10.3.8",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
     "react": "18.2.0",
@@ -15,6 +17,7 @@
     "react-router-dom": "^6.22.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
+    "socket.io-client": "^4.7.5",
     "sort-by": "^0.0.2",
     "tslib": "^2.3.0"
   },
