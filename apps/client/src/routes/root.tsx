@@ -18,7 +18,7 @@ export const Root: React.FC = () => {
     <div className="flex h-full w-full flex-col items-center justify-center p-4">
       <div className="h-fit w-fit flex-col border border-green-900">
         {messages?.map((message) => {
-          return <div>{message}</div>;
+          return <div key={message.id}>{message.message}</div>;
         })}
       </div>
 

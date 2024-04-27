@@ -1,3 +1,4 @@
+import { Message } from '@prisma/client';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { io } from 'socket.io-client';
 
@@ -5,7 +6,7 @@ export const serverApi = createApi({
   reducerPath: 'serverApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/api' }),
   endpoints: (build) => ({
-    getMessages: build.query<string[], void>({
+    getMessages: build.query<Message[], void>({
       query: () => ({ url: 'messages' }),
       async onCacheEntryAdded(
         arg,
