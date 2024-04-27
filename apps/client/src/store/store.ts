@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { serverApi } from './services/server.api';
+import reducer from './reducers';
 
 export const store = configureStore({
-  reducer: { [serverApi.reducerPath]: serverApi.reducer },
+  reducer,
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(serverApi.middleware),
