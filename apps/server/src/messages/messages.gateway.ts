@@ -11,7 +11,11 @@ import {
 import { Server } from 'socket.io';
 import { Socket } from 'socket.io-client';
 
-@WebSocketGateway({ cors: { origin: '*' }, transports: ['websocket'] })
+@WebSocketGateway({
+  cors: { origin: '*' },
+  transports: ['websocket'],
+  namespace: 'messages',
+})
 export class MessagesGateway
   implements OnGatewayConnection, OnGatewayDisconnect
 {
@@ -20,6 +24,7 @@ export class MessagesGateway
 
   handleConnection(client: Socket) {
     Logger.log(`${client.id} is connected`);
+    client.emit('message', 'Hello you are connected');
   }
   handleDisconnect(client: Socket) {
     Logger.log(`${client.id} is disconnected`);
