@@ -11,7 +11,7 @@ export const Root: React.FC = () => {
   const [trigger] = useSendMessageMutation();
 
   const handleClick = () => {
-    trigger(message).unwrap();
+    trigger({ id: crypto.randomUUID(), message }).unwrap();
   };
 
   return (

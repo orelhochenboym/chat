@@ -11,6 +11,7 @@ import {
 import { Server } from 'socket.io';
 import { Socket } from 'socket.io-client';
 import { MessagesService } from './messages.service';
+import { Message } from '@prisma/client';
 
 @WebSocketGateway({
   cors: { origin: '*' },
@@ -34,10 +35,12 @@ export class MessagesGateway
   }
 
   @SubscribeMessage('message')
-  handleMessage(
-    @MessageBody() data: string,
+  async handleMessage(
+    @MessageBody() data: Message,
     @ConnectedSocket() client: Socket,
   ) {
-    client.emit('message', data, (data: string) => console.log(data));
+    const message = await this.messagesService.sendMessage(data);
+
+    client.emit('message', message);
   }
 }
