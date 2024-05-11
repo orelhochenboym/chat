@@ -41,30 +41,37 @@ export const serverApi = createApi({
       },
       async onQueryStarted(data, { dispatch, queryFulfilled, getState }) {
         // Update state of getMessages instead of querying it again for all messages.
-        // const patchResult = dispatch(
-        //   serverApi.util.updateQueryData('getMessages', undefined, (draft) => {
-        //     draft.push(data);
-        //   }),
-        // );
+        const patchResult = dispatch(
+          serverApi.util.updateQueryData('getMessages', undefined, (draft) => {
+            draft.push(data);
+          }),
+        );
 
         try {
           // This is the response from the server, now verify its the same as patched above.
           const result = await queryFulfilled;
 
-          serverApi.util.updateQueryData('getMessages', undefined, (draft) => {
-            const index = draft.findIndex(
-              (message) => message.id === result.data.id,
-            );
+          dispatch(
+            serverApi.util.updateQueryData(
+              'getMessages',
+              undefined,
+              (draft) => {
+                const index = draft.findIndex(
+                  (message) => message.id === result.data.id,
+                );
 
-            if (index === -1) {
-              throw new Error("It doesn't Work");
-            }
-
-            draft[index] = result.data;
-          });
+                if (index === -1) {
+                  patchResult.undo();
+                  draft.push(result.data);
+                } else {
+                  draft[index] = result.data;
+                }
+              },
+            ),
+          );
         } catch (e) {
-          // If result fails, invalidate tag for getMessages
-          // patchResult.undo();
+          //TODO: If result fails, invalidate tag for getMessages
+          patchResult.undo();
           console.log(e);
         }
       },
